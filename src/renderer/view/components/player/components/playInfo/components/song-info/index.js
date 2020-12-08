@@ -1,5 +1,5 @@
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 export default {
     data() {
@@ -44,7 +44,7 @@ export default {
         ...mapGetters('play', ['hasHigherQuality']),
         qualityText() {
             const matched = this.qualities.find(item => item.checked)
-            return matched ? matched.name : this.quality / 1000 + 'k'
+            return matched ? matched.name : parseInt(this.quality / 1000) + 'k'
         },
     },
     watch: {
@@ -167,7 +167,7 @@ export default {
                     (val * this.duration.total) / 100)
         },
         minute(val) {
-            return moment(val * 1000).format('mm:ss')
+            return dayjs(val * 1000).format('mm:ss')
         },
         canPlay() {
             this.duration.total = this.$refs.audio.duration
